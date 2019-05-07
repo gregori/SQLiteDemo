@@ -44,7 +44,12 @@ public class DAL {
         Cursor cursor;
         String [] fields = {CreateDatabase.ID, CreateDatabase.TITLE};
         db = database.getReadableDatabase();
-        cursor = db.query(CreateDatabase.TABLE, fields, null, null, null, null,
+
+        // SELECT _id, title FROM book
+        // String sql = "SELECT _id, title FROM book";
+        //cursor = db.rawQuery(sql, null);
+        cursor = db.query(CreateDatabase.TABLE, fields, null,
+                null, null, null,
                 null, null);
 
         if (cursor != null) {

@@ -29,9 +29,11 @@ public class InsertActivity extends AppCompatActivity {
                 String publisher = etPublisher.getText().toString();
 
                 if (dal.insert(title, author, publisher)) {
-                    Toast.makeText(InsertActivity.this, "Registro Inserido com sucesso!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(InsertActivity.this,
+                            "Registro Inserido com sucesso!", Toast.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(InsertActivity.this, "Erro ao inserir registro!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(InsertActivity.this,
+                            "Erro ao inserir registro!", Toast.LENGTH_LONG).show();
                 }
             }
         });
