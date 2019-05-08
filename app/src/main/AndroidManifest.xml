@@ -11,6 +11,8 @@
         android:theme="@style/AppTheme">
         <activity android:name=".InsertActivity"
             android:parentActivityName=".MainActivity"></activity>
+        <activity android:name=".ViewUpdateActivity"
+            android:parentActivityName=".MainActivity"></activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

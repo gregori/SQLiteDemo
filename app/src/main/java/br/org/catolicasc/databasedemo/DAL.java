@@ -6,8 +6,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import java.util.zip.CRC32;
-
 public class DAL {
     private static final String TAG = "DAL";
 
@@ -40,9 +38,53 @@ public class DAL {
         return true;
     }
 
+    public boolean update(int id, String title, String author, String publisher) {
+        ContentValues values;
+        long result;
+
+        String where = "_id = ?";
+        String[] args = { String.valueOf(id) };
+
+        db = database.getWritableDatabase();
+
+        values = new ContentValues();
+        values.put(CreateDatabase.TITLE, title);
+        values.put(CreateDatabase.AUTHOR, author);
+        values.put(CreateDatabase.PUBLISHER, publisher);
+
+        result = db.update(CreateDatabase.TABLE, values, where, args);
+        db.close();
+
+
+        if (result == -1) {
+            Log.e(TAG, "insert: Erro atualizando registro");
+            return false;
+        }
+
+        return true;
+    }
+
+    public Cursor findById(int id) {
+        Cursor cursor;
+        String where = "_id = ?";
+        String[] args = { String.valueOf(id) };
+
+        db = database.getReadableDatabase();
+
+        cursor = db.query(CreateDatabase.TABLE, null,
+                where, args, null, null, null, null);
+
+        if (cursor != null) {
+            cursor.moveToFirst();
+        }
+
+        db.close();
+        return cursor;
+    }
+
     public Cursor loadAll() {
         Cursor cursor;
-        String [] fields = {CreateDatabase.ID, CreateDatabase.TITLE};
+        String[] fields = {CreateDatabase.ID, CreateDatabase.TITLE};
         db = database.getReadableDatabase();
 
         // SELECT _id, title FROM book

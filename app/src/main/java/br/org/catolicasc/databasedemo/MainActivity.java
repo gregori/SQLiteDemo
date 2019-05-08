@@ -6,9 +6,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,12 +35,22 @@ public class MainActivity extends AppCompatActivity {
 
         lvBooks.setAdapter(adapter);
 
-        Button btnAdd = findViewById(R.id.btnAdd);
+        lvBooks.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+               Intent intent = new Intent(MainActivity.this, ViewUpdateActivity.class);
+               intent.putExtra(CreateDatabase.ID,
+                       Integer.valueOf(((TextView)view.findViewById(R.id.tvId)).getText().toString()));
+               startActivity(intent);
+            }
+        });
+
+        Button btnAdd = findViewById(R.id.btnUpdate);
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                Intent intent = new Intent(MainActivity.this, InsertActivity.class);
-                startActivity(intent);
+               startActivity(intent);
             }
         });
     }

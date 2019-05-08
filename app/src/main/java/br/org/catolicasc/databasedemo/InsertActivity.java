@@ -14,7 +14,7 @@ public class InsertActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_insert);
 
-        Button btnAdd = findViewById(R.id.btnAdd);
+        Button btnAdd = findViewById(R.id.btnUpdate);
 
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
