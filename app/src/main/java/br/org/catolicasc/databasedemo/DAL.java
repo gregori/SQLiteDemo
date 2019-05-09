@@ -6,17 +6,17 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-public class DAL {
+class DAL {
     private static final String TAG = "DAL";
 
     private SQLiteDatabase db;
     private CreateDatabase database;
 
-    public DAL(Context context) {
+    DAL(Context context) {
         database = new CreateDatabase(context);
     }
 
-    public boolean insert(String title, String author, String publisher) {
+    boolean insert(String title, String author, String publisher) {
         ContentValues values;
         long result;
 
@@ -46,7 +46,7 @@ public class DAL {
      * @param publisher editora do livro
      * @return true se foi possível atualizar o registro, false caso contrário.
      */
-    public boolean update(int id, String title, String author, String publisher) {
+    boolean update(int id, String title, String author, String publisher) {
         ContentValues values;
         long result;
 
@@ -77,7 +77,7 @@ public class DAL {
         return true;
     }
 
-    public Cursor findById(int id) {
+    Cursor findById(int id) {
         Cursor cursor;
         String where = "_id = ?";
         String[] args = { String.valueOf(id) };
@@ -95,7 +95,7 @@ public class DAL {
         return cursor;
     }
 
-    public Cursor loadAll() {
+    Cursor loadAll() {
         Cursor cursor;
         String[] fields = {CreateDatabase.ID, CreateDatabase.TITLE};
         db = database.getReadableDatabase();
