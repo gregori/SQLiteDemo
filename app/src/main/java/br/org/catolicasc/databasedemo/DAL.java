@@ -38,24 +38,37 @@ public class DAL {
         return true;
     }
 
+    /**
+     * Atualiza um registro na base de dados
+     * @param id o id do livro
+     * @param title título do livro
+     * @param author autor do livro
+     * @param publisher editora do livro
+     * @return true se foi possível atualizar o registro, false caso contrário.
+     */
     public boolean update(int id, String title, String author, String publisher) {
         ContentValues values;
         long result;
 
+        // A cláusula where para o update. Note a interrogação. É um "wildcard".
+        // Seu valor será inserido pelo contido na variável args
         String where = "_id = ?";
         String[] args = { String.valueOf(id) };
 
+        // Obtemos um acesso ao banco com permissão de escrita
         db = database.getWritableDatabase();
 
+        // Par de nomes de colunas + valores, para atualização no banco
         values = new ContentValues();
         values.put(CreateDatabase.TITLE, title);
         values.put(CreateDatabase.AUTHOR, author);
         values.put(CreateDatabase.PUBLISHER, publisher);
 
+        // efetivamente faz o update no banco, fechando o acesso em seguida
         result = db.update(CreateDatabase.TABLE, values, where, args);
         db.close();
 
-
+        // Reporta um erro caso tenha acontecido
         if (result == -1) {
             Log.e(TAG, "insert: Erro atualizando registro");
             return false;
