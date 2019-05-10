@@ -50,6 +50,35 @@ class DAL {
     }
 
     /**
+     * Remove um registro do banco.
+     * @param id O id do registro a ser removido
+     * @return true em caso de sucesso, false em caso contrário
+     */
+    boolean delete(int id) {
+        long result;
+
+        // A cláusula where para o update. Note a interrogação. É um "wildcard".
+        // Seu valor será inserido pelo contido na variável args
+        String where = "_id = ?";
+        String[] args = { String.valueOf(id) };
+
+        // Obtemos um acesso ao banco com permissão de escrita
+        db = database.getWritableDatabase();
+
+        // efetivamente faz o delete no banco, fechando o acesso em seguida
+        result = db.delete(CreateDatabase.TABLE, where, args);
+        db.close();
+
+        // Reporta um erro caso tenha acontecido
+        if (result == -1) {
+            Log.e(TAG, "insert: Erro removendo registro");
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
      * Atualiza um registro na base de dados
      * @param id o id do livro
      * @param title título do livro

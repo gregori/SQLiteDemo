@@ -15,6 +15,7 @@ import android.widget.TextView;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
+    private SimpleCursorAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
         //Log.d(TAG, "onCreate: id " + cursor.getInt(0) + " title " + cursor.getString(1));
         Log.d(TAG, "onCreate: " + cursor.getCount());
-        SimpleCursorAdapter adapter = new SimpleCursorAdapter(MainActivity.this,
+        adapter = new SimpleCursorAdapter(MainActivity.this,
                 R.layout.book_layout, cursor, fields, ids, 0);
 
         lvBooks.setAdapter(adapter);
@@ -45,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
         Button btnAdd = findViewById(R.id.btnUpdate);
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,5 +55,21 @@ public class MainActivity extends AppCompatActivity {
                startActivity(intent);
             }
         });
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        if (adapter != null) {
+            adapter.notifyDataSetChanged();
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (adapter != null) {
+            adapter.notifyDataSetChanged();
+        }
     }
 }
